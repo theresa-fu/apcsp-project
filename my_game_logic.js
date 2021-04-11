@@ -8,11 +8,13 @@ turn_done = false
 player1_score = 0 
 player2_score = 0 
 first_selected_cell_id = null
+gameStarted = false 
  
  
 // referenced https://javascript.info/task/shuffle
 function startGame(){
 	underlying_color = underlying_color.sort(() => Math.random() - 0.5);
+  gameStarted = true;
 }
 
 
@@ -25,7 +27,7 @@ function get_idx_from_cell_id(cell_id){
 }
 
 function setCellColor(cell_id){
-		if (turn_done) return;
+		if (turn_done || !gameStarted) return;
 		color = underlying_color[get_idx_from_cell_id(cell_id)];
     //console.log(player1_score, first_selected_cell_id, cell_id, cell_number);
     getElement(cell_id).style.backgroundColor = color;
@@ -82,6 +84,7 @@ function colorMatch(second_cell_id){
   	if (current_player == 1) {
     	player1_score += 1;
     } else {
+    	// assert(current_player == 2);
       player2_score += 1;
     }
     matched_colors.push(first_cell_color);
