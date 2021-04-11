@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Matching Card Game</title>
+<style>
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  background-color: #2196F3;
+  padding: 10px;
+}
+.grid-item {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+    <input id="nextBtn" type="button" class="btn" value="NEXT" onclick="startGame();">
+    <input id="switchBtn" type="button" class="btn" value="SWTICH TURN" onclick="switchTurns();">
+ 
+<div class="grid-container">
+  <div id="cell1" class="grid-item" onclick="setCellColor(this.id);">1</div>
+  <div id="cell2" class="grid-item" onclick="setCellColor(this.id);">2</div>
+  <div id="cell3" class="grid-item" onclick="setCellColor(this.id);">3</div>  
+  <div id="cell4" class="grid-item" onclick="setCellColor(this.id);">4</div>
+  <div id="cell5" class="grid-item" onclick="setCellColor(this.id);">5</div>
+  <div id="cell6" class="grid-item" onclick="setCellColor(this.id);">6</div>  
+  <div id="cell7" class="grid-item" onclick="setCellColor(this.id);">7</div>
+  <div id="cell8" class="grid-item" onclick="setCellColor(this.id);">8</div>
+  <div id="cell9" class="grid-item" onclick="setCellColor(this.id);">9</div>
+  <div id="cell10" class="grid-item" onclick="setCellColor(this.id);">10</div>
+  <div id="cell11" class="grid-item" onclick="setCellColor(this.id);">11</div>
+  <div id="cell12" class="grid-item" onclick="setCellColor(this.id);">12</div>  
+
+  <script src="my_game_logic.js"></script>
+</body>
+
+</html>
+
