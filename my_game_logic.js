@@ -82,7 +82,6 @@ function colorMatch(second_cell_id){
   	if (current_player == 1) {
     	player1_score += 1;
     } else {
-    	// assert(current_player == 2);
       player2_score += 1;
     }
     matched_colors.push(first_cell_color);
