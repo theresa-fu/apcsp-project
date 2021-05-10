@@ -3,64 +3,189 @@
   <head>
     <title>Matching Card Game</title>
    <style>
-.grid-container {
-  display: grid;
-  grid-template-columns: auto auto auto;
-  background-color: #2196F3;
-  padding: 10px;
-}
-.grid-item {
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.8);
-  padding: 20px;
-  font-size: 30px;
-  text-align: center;
-}
-.heading {
-  border: 5px solid black;
-}
-
-.playerName {background-color: lime; width: 150px; font-size: 40px; font-weight: bold; padding: 5px; text-align: center;}
-.score {
-  background-color: yellow;
-  font-size: 40px;
-  font-weight: bold;
-}
-/* .red { background-color: red; } */
-</style>
-</head>
-<body>
-
-    <input id="nextBtn" type="button" class="btn" value="NEXT" onclick="startGame();">
-    <input id="switchBtn" type="button" class="btn" value="SWTICH TURN" onclick="switchTurns();">
-    <div class="heading">
+    .starting{
+      text-align: center;
+      font-size: 125px;
+      font-family: Copperplate, Papyrus, Fantasy;
+    }
+    .centered{
+      text-align: center;
+    }
+    /* referenced https://www.w3schools.com/css/css3_buttons.asp */
+    .btn{
+      background-color: white;
+      font-size: 70px;
+      transition-duration: 0.4s;
+    }
+    .btn:hover {
+      background-color: #FFB1A6;
+      color: white;
+      box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    }
+    .information{
+      text-align: center;
+      font-size: 75px;
+      text-decoration: underline double red;
+    }
+    .enter{
+      font-size: 50px;
+      color: #FF5733;
+      font-family: "Lucida Console", Monaco, monospace;
+    }
+    .inputBox{
+      font-size: 48px;
+      color: #C70039;
+      font-family: "Lucida Console", Monaco, monospace;
+    }
+    color{
+      display: inline-block;
+      width: 166px;
+      height: 166px;
+      border: 30px;
+      border-style: double;
+    }
+    .red{
+      background-color: red;
+    }
+    .orange{
+      background-color: orange;
+    }
+    .yellow{
+      background-color: yellow;
+    }
+    .green{
+      background-color: green;
+    }
+    .blue{
+      background-color: blue;
+    }
+    .purple{
+      background-color: purple;
+    }
+    .white{
+      background-color: white;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: auto auto auto;
+      background-color: #ffffff;
+      padding: 5 px;
+      visibility: hidden;
+    }
+    .grid-item {
+      background-color: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(0, 0, 0, 0.8);
+      padding: 20px;
+      font-size: 30px;
+      text-align: center;
+    }
+    .heading {
+      font-size: 50px;
+      font-family: "Lucida Console", Monaco, monospace;
+      width: 100vw;
+    }
+    .playerName1 {
+      background-color: lime; 
+      width: 150px; font-size: 40px; 
+      font-weight: bold; 
+      padding: 5px; 
+      text-align: left;
+    }
+    .playerName1 {
+      background-color: lime; 
+      width: 150px; font-size: 40px; 
+      font-weight: bold; 
+      padding: 5px; 
+      text-align: right;
+    }
+    .score {
+      background-color: rgb(255, 255, 255);
+      font-size: 40px;
+      font-weight: bold;
+    } 
+    .switchBtn {
+      text-align: center;
+      font-size: 10px;
+    }
+    .corgiGif {
+      width: 1500px;
+    }
+  </style>
+  </head>
+  <body>
+    <h3 id="title" class="starting">Matching Game</h3>
+    <div id="player1infopage" style="display:none">
+      <h3 class="information">Player 1's Information</h3>
+      <div class="enter">Enter Name: <input type="text" id="player1nameinput" maxlength="15" value="Player 1" class="inputBox"></div>
+      <br>
+      <br>
+      <br>
+      <div class="enter">Select a Color: </div>
+        <color id="red1" onclick="setColor(this.id);" class="red"></color>
+        <color id="orange1" onclick="setColor(this.id);" class="orange"></color>
+        <color id="yellow1" onclick="setColor(this.id);" class="yellow"></color>
+        <color id="green1" onclick="setColor(this.id);" class="green"></color>
+        <color id="blue1" onclick="setColor(this.id);" class="blue"></color>
+        <color id="purple1" onclick="setColor(this.id);" class="purple"></color>
+    </div>
+    <div id="player2infopage" style="display:none">
+      <h3 class="information">Player 2's Information</h3>
+      <div class="enter">Enter Name: <input type="text" id="player2nameinput" maxlength="15" value="Player 2" class="inputBox"></div>
+      <br>
+      <br>
+      <br>
+      <div class="enter">Select a Color: </div>
+        <color id="red1" onclick="setColor(this.id);" class="red"></color>
+        <color id="orange2" onclick="setColor(this.id);" class="orange"></color>
+        <color id="yellow2" onclick="setColor(this.id);" class="yellow"></color>
+        <color id="green2" onclick="setColor(this.id);" class="green"></color>
+        <color id="blue2" onclick="setColor(this.id);" class="blue"></color>
+        <color id="purple2" onclick="setColor(this.id);" class="purple"></color>
+    </div>
+    <div class="centered">
+      <input id="beginBtn" type="button" class="btn" value="BEGIN" onclick="begin();">
+      <input id="infoBtn" type="button" class="btn" value="Next Player" onclick="validatePlayerInfo();" style="display:none">
+      <input id="startBtn" type="button" class="btn" value="Start Game" onclick="startGame();" style="display:none">
+    </div>
+    <div class="heading" id="heading" style="display:none">
       <table>
         <tr class>
-            <td class = "playerName" id = "player1Name">Player 1</td>
-            <td class = "score" id = "scoreboard"></td>
-            <td class = "playerName" id = "player2Name">Player 2</td>
+          <td class = "playerName1" id = "player1Name">Player 1</td>
+          <td class = "score" id = "scoreboard"></td>
+          <td class = "playerName1" id = "player2Name">Player 2</td>
         </tr>
       </table>
+    </div>   
+    <div id="grid" class="grid-container">
+      <div id="cell1" class="grid-item" onclick="setCellColor(this.id);">1</div>
+      <div id="cell2" class="grid-item" onclick="setCellColor(this.id);">2</div>
+      <div id="cell3" class="grid-item" onclick="setCellColor(this.id);">3</div>  
+      <div id="cell4" class="grid-item" onclick="setCellColor(this.id);">4</div>
+      <div id="cell5" class="grid-item" onclick="setCellColor(this.id);">5</div>
+      <div id="cell6" class="grid-item" onclick="setCellColor(this.id);">6</div>  
+      <div id="cell7" class="grid-item" onclick="setCellColor(this.id);">7</div>
+      <div id="cell8" class="grid-item" onclick="setCellColor(this.id);">8</div>
+      <div id="cell9" class="grid-item" onclick="setCellColor(this.id);">9</div>
+      <div id="cell10" class="grid-item" onclick="setCellColor(this.id);">10</div>
+      <div id="cell11" class="grid-item" onclick="setCellColor(this.id);">11</div>
+      <div id="cell12" class="grid-item" onclick="setCellColor(this.id);">12</div>  
     </div>
-     
-<div id="grid" class="grid-container">
-  <div id="cell1" class="grid-item" onclick="setCellColor(this.id);">1</div>
-  <div id="cell2" class="grid-item" onclick="setCellColor(this.id);">2</div>
-  <div id="cell3" class="grid-item" onclick="setCellColor(this.id);">3</div>  
-  <div id="cell4" class="grid-item" onclick="setCellColor(this.id);">4</div>
-  <div id="cell5" class="grid-item" onclick="setCellColor(this.id);">5</div>
-  <div id="cell6" class="grid-item" onclick="setCellColor(this.id);">6</div>  
-  <div id="cell7" class="grid-item" onclick="setCellColor(this.id);">7</div>
-  <div id="cell8" class="grid-item" onclick="setCellColor(this.id);">8</div>
-  <div id="cell9" class="grid-item" onclick="setCellColor(this.id);">9</div>
-  <div id="cell10" class="grid-item" onclick="setCellColor(this.id);">10</div>
-  <div id="cell11" class="grid-item" onclick="setCellColor(this.id);">11</div>
-  <div id="cell12" class="grid-item" onclick="setCellColor(this.id);">12</div>  
-  </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="switchBtn">
+      <input id="switchBtn" type="button" class="btn" value="Switch Turn" onclick="switchTurns();" style="display:none">
+    </div>
+    <script src="my_game_logic.js"></script>
 
-  <script src="my_game_logic.js"></script>
-
-  <iframe id="winning_image" src="https://giphy.com/embed/h4ke3VIEf1ib5WyHvQ" width="480" height="392" frameBorder="0" class="giphy-embed" style="display:none" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/dogs-confetti-corgiyolk-h4ke3VIEf1ib5WyHvQ"></a></p>
-</body>
+    
+    <iframe id="winning_image" class="corgiGif" src="https://giphy.com/embed/h4ke3VIEf1ib5WyHvQ" width="480" height="392" frameBorder="0" class="giphy-embed" style="display:none" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/dogs-confetti-corgiyolk-h4ke3VIEf1ib5WyHvQ"></a></p>
+    <input id="restartBtn" type="button" class="btn" value="Restart" onclick="restart()" style="display:none">
+  </body>
 
 </html>
