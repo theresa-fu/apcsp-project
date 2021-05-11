@@ -15,20 +15,19 @@ FIRST_SELECTED_CELL_ID = null;
 GAME_STARTED = false; 
  
  
-//referenced https://javascript.info/task/shuffle
+
 //startGame shuffles the order of the elements in the array underlying_color and sets GAME_STARTED to true
-//This function also hides the previous player information pages, and unhides the grid of which the game
+//This function also hides the players' information pages, and unhides the grid of which the game
 //takes place on as well as the player names
 function startGame(){
-  if(validatePlayerInfo() == false){
+  if (validatePlayerInfo() == false)
     return;
-  }
-  if (PLAYER2_COLOR == "" || PLAYER1_COLOR == "") {
+
+  if (PLAYER2_COLOR == "" || PLAYER1_COLOR == "")
     return;
-  }
+
   hide("player2infopage");
   hide("startBtn");
-  unhide("switchBtn");
   unhide("heading");
   getElement("player1Name").innerHTML = getElement("player1nameinput").value;
   getElement("player2Name").innerHTML = getElement("player2nameinput").value;
@@ -40,9 +39,10 @@ function startGame(){
     getElement("player1Name").className = "white";
     getElement("player2Name").className = PLAYER2_COLOR;
   }
-  document.getElementById ("grid").style.visibility = "visible"
-	underlying_color = underlying_color.sort(() => Math.random() - 0.5);
+  document.getElementById ("grid").style.visibility = "visible";
   GAME_STARTED = true;
+  //referenced https://javascript.info/task/shuffle
+	underlying_color = underlying_color.sort(() => Math.random() - 0.5);
 }
 
 function randStartingPlayer(){
@@ -138,36 +138,40 @@ function begin(){
 function setCellColor(cell_id){
   //During a turn, a clicked square will reveal a color
 	if (TURN_DONE || !GAME_STARTED) return;
-		color = underlying_color[get_idx_from_cell_id(cell_id)];
-    //console.log(player1_score, first_selected_cell_id, cell_id, cell_number);
-    getElement(cell_id).style.backgroundColor = color;
 
+  color = underlying_color[get_idx_from_cell_id(cell_id)];
+  getElement(cell_id).style.backgroundColor = color;
+
+  notAlreadyUncovered = !MATCHED_CELLS.includes(get_idx_from_cell_id(cell_id));
   //This if-statement checks to see if this is the first square the player has selected
   //out of the two selections a user is allowed to make
-  if (FIRST_SELECTED_CELL_ID == null){
+  if (FIRST_SELECTED_CELL_ID == null && notAlreadyUncovered){
     	FIRST_SELECTED_CELL_ID= cell_id;
-  } else {
+  } else if (FIRST_SELECTED_CELL_ID != null){
   //This comes in action if this is the second square the player has selected.
   //It checks to see if the colors of the underlying colors of the two selected squares
   //match as well as ends the turn.
+    if (notAlreadyUncovered)
+      TURN_DONE = true;
     colorMatch(cell_id);
-    TURN_DONE = true;
+    setTimeout(switchTurns, 750);
   }
 }
 
-//This function colors the whole grid whatever color is imolemented into the parameter besides the cells on the\
+//This function colors the whole grid whatever color is imolemented into the parameter besides the cells on the
 //grid that match
 function colorGrid(color){
   for (var j = 1; j <= 12; j++) {
-    if (!MATCHED_CELLS.includes(j-1))
+    if (!MATCHED_CELLS.includes(j-1)){
       getElement("cell" + j).style.backgroundColor = color;
+    }
   }
 }
 
 //This function switches the current player's turn
-function switchTurns() {
+function switchTurns(){
   if(!TURN_DONE){
-    alert("Please select your 2nd square");
+    alert("Please select a square");
     return;
   }
 
@@ -193,7 +197,9 @@ function checkScoreThreshold() {
     hide("switchBtn");
     hide("heading");
     unhide("winning_image");
-    unhide("restartBtn")
+    getElement("congratulations").innerHTML = "Congratulations to " + getElement(`player${CURRENT_PLAYER}Name`).innerHTML + "!"
+    unhide("congratulations");
+    unhide("restartBtn");
   }
 }
 
@@ -213,11 +219,11 @@ function colorMatch(second_cell_id){
     }
     MATCHED_COLORS.push(first_cell_color);
   }
-  getElement("scoreboard").innerHTML = PLAYER1_SCORE + " VS " + PLAYER2_SCORE ;
+  getElement("scoreboard").innerHTML = PLAYER1_SCORE + " VS " + PLAYER2_SCORE;
   checkScoreThreshold();
 }
 
-//This function reloads the page, and restarts the game from the beginning screen
+//This function reloads the page, and restarts the game from the beginning screen.
 function restart(){
   location.reload();
 }
