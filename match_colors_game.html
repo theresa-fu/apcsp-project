@@ -21,6 +21,7 @@
       font-size: 70px;
       transition-duration: 0.4s;
     }
+    /* referenced https://www.w3schools.com/css/css3_buttons.asp */
     .btn:hover {
       background-color: #FFB1A6;
       color: white;
@@ -183,6 +184,7 @@
     <script src="my_game_logic.js"></script>
 
     <h3 id="congratulations" class="starting" style="display:none">Congratulations</h3>
+    <h3 id="tie" class="starting" style="display:none">It's a tie!!</h3>
     <iframe id="winning_image" class="corgiGif" src="https://giphy.com/embed/h4ke3VIEf1ib5WyHvQ" width="480" height="392" frameBorder="0" class="giphy-embed" style="display:none" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/dogs-confetti-corgiyolk-h4ke3VIEf1ib5WyHvQ"></a></p>
     <input id="restartBtn" type="button" class="btn" value="Restart" onclick="restart()" style="display:none">
   </body>

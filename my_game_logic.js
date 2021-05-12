@@ -4,7 +4,7 @@ underlying_color = ['red', 'green', 'blue', 'purple', 'orange', 'yellow','red', 
 //global variables listed below
 MATCHED_COLORS = [];
 MATCHED_CELLS = [];
-WINNING_SCORE_THRESHOLD = 2;
+WINNING_SCORE_THRESHOLD = 4;
 CURRENT_PLAYER = 1;
 TURN_DONE = false;
 PLAYER1_SCORE = 0;
@@ -168,13 +168,8 @@ function colorGrid(color){
   }
 }
 
-//This function switches the current player's turn
+//This function changes the player's turn and resets unmatched cells of the grid to white
 function switchTurns(){
-  if(!TURN_DONE){
-    alert("Please select a square");
-    return;
-  }
-
 	if (CURRENT_PLAYER == 1) {
   	CURRENT_PLAYER = 2;
     getElement("player2Name").className = PLAYER2_COLOR;
@@ -190,15 +185,22 @@ function switchTurns(){
   colorGrid('white');
 }
 
-//This function checks to see if the game is over
+//This function checks to see if the game is over and will display a congratulations screen for the player won
+//or "It's a tie!!" if the score is 3-3.
 function checkScoreThreshold() {
 	if (CURRENT_PLAYER == 1 && PLAYER1_SCORE == WINNING_SCORE_THRESHOLD || CURRENT_PLAYER == 2 && PLAYER2_SCORE == WINNING_SCORE_THRESHOLD){
     hide("grid");
-    hide("switchBtn");
     hide("heading");
     unhide("winning_image");
     getElement("congratulations").innerHTML = "Congratulations to " + getElement(`player${CURRENT_PLAYER}Name`).innerHTML + "!"
     unhide("congratulations");
+    unhide("restartBtn");
+  }
+  if (PLAYER1_SCORE == 3 && PLAYER2_SCORE == 3){
+    hide("grid");
+    hide("heading");
+    unhide("winning_image");
+    unhide("tie");
     unhide("restartBtn");
   }
 }
