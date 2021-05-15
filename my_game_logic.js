@@ -135,36 +135,32 @@ function begin(){
 }
 
 //This function changes the color of the square
-function setCellColor(cell_id){
+function makeMove(cell_id){
   //During a turn, a clicked square will reveal a color
-	if (TURN_DONE || !GAME_STARTED) return;
+  if (TURN_DONE || !GAME_STARTED) 
+    return;
 
+  // cell is already uncovered and its color is exposed, take no action
+  AlreadyUncovered = MATCHED_CELLS.includes(get_idx_from_cell_id(cell_id)) || FIRST_SELECTED_CELL_ID == cell_id;
+  if (AlreadyUncovered){
+    alert("Please choose a covered (white) cell")
+    return;
+  }
+    
+  // color the cell
   color = underlying_color[get_idx_from_cell_id(cell_id)];
   getElement(cell_id).style.backgroundColor = color;
-
-  notAlreadyUncovered = !MATCHED_CELLS.includes(get_idx_from_cell_id(cell_id));
   //This if-statement checks to see if this is the first square the player has selected
   //out of the two selections a user is allowed to make
-  if (FIRST_SELECTED_CELL_ID == null && notAlreadyUncovered){
-    	FIRST_SELECTED_CELL_ID= cell_id;
-  } else if (FIRST_SELECTED_CELL_ID != null){
+  if (FIRST_SELECTED_CELL_ID == null){
+    	FIRST_SELECTED_CELL_ID = cell_id;
+  } else {
   //This comes in action if this is the second square the player has selected.
   //It checks to see if the colors of the underlying colors of the two selected squares
-  //match as well as ends the turn.
-    if (notAlreadyUncovered)
-      TURN_DONE = true;
-    colorMatch(cell_id);
+  //match as well as ends the turn. 
+    TURN_DONE = true;
+    checkIfColorsMatch(cell_id);
     setTimeout(switchTurns, 750);
-  }
-}
-
-//This function colors the whole grid whatever color is imolemented into the parameter besides the cells on the
-//grid that match
-function colorGrid(color){
-  for (var j = 1; j <= 12; j++) {
-    if (!MATCHED_CELLS.includes(j-1)){
-      getElement("cell" + j).style.backgroundColor = color;
-    }
   }
 }
 
@@ -182,7 +178,18 @@ function switchTurns(){
 
   TURN_DONE = false;
   FIRST_SELECTED_CELL_ID = null;
-  colorGrid('white');
+  colorGrid();
+}
+
+
+//This function colors the whole grid whatever color is implemented into the parameter besides the cells on the
+//grid that match
+function colorGrid(){
+  for (var j = 1; j <= underlying_color.length; j++) {
+    if (!MATCHED_CELLS.includes(j-1)){
+      getElement("cell" + j).style.backgroundColor = "white";
+    }
+  }
 }
 
 //This function checks to see if the game is over and will display a congratulations screen for the player won
@@ -191,7 +198,6 @@ function checkScoreThreshold() {
 	if (CURRENT_PLAYER == 1 && PLAYER1_SCORE == WINNING_SCORE_THRESHOLD || CURRENT_PLAYER == 2 && PLAYER2_SCORE == WINNING_SCORE_THRESHOLD){
     hide("grid");
     hide("heading");
-    unhide("winning_image");
     getElement("congratulations").innerHTML = "Congratulations to " + getElement(`player${CURRENT_PLAYER}Name`).innerHTML + "!"
     unhide("congratulations");
     unhide("restartBtn");
@@ -199,26 +205,24 @@ function checkScoreThreshold() {
   if (PLAYER1_SCORE == 3 && PLAYER2_SCORE == 3){
     hide("grid");
     hide("heading");
-    unhide("winning_image");
     unhide("tie");
     unhide("restartBtn");
   }
 }
 
 //This function is responsible for checking if the colors match and scoring for the turn
-function colorMatch(second_cell_id){
+function checkIfColorsMatch(cell_id){
   fcell_id = get_idx_from_cell_id(FIRST_SELECTED_CELL_ID)
-  scell_id = get_idx_from_cell_id(second_cell_id)
+  scell_id = get_idx_from_cell_id(cell_id)
 	first_cell_color = underlying_color[fcell_id];
   second_cell_color = underlying_color[scell_id];
 	if (first_cell_color == second_cell_color && !MATCHED_COLORS.includes(first_cell_color)){
     MATCHED_CELLS.push(fcell_id);
     MATCHED_CELLS.push(scell_id);
-  	if (CURRENT_PLAYER == 1) {
+  	if (CURRENT_PLAYER == 1)
     	PLAYER1_SCORE += 1;
-    } else {
+    else
       PLAYER2_SCORE += 1;
-    }
     MATCHED_COLORS.push(first_cell_color);
   }
   getElement("scoreboard").innerHTML = PLAYER1_SCORE + " VS " + PLAYER2_SCORE;

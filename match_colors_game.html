@@ -96,13 +96,15 @@
       font-weight: bold; 
       padding: 5px; 
       text-align: left;
+      display: table;
     }
     .playerName2 {
       background-color: lime; 
       width: 150px; font-size: 40px; 
       font-weight: bold; 
-      padding: 5px; 
+      padding: 0px; 
       text-align: right;
+      display: table;
     }
     .score {
       background-color: rgb(255, 255, 255);
@@ -113,9 +115,10 @@
       text-align: center;
       font-size: 10px;
     }
-    .corgiGif {
-      width: 1500px;
+    table {
+      width:100%
     }
+}
   </style>
   </head>
   <body>
@@ -155,11 +158,13 @@
     </div>
     <div class="heading" id="heading" style="display:none">
       <table id="score_table" class="table">
-        <tr>
-          <td class = "playerName1" id = "player1Name">Player 1</td>
-          <td class = "score" id = "scoreboard"></td>
-          <td class = "playerName2" id = "player2Name">Player 2</td>
-        </tr>
+      	<thead>
+	        <tr>
+	          <td class = "playerName1" id = "player1Name">Player 1</td>
+	          <td class = "score" id = "scoreboard"></td>
+	          <td class = "playerName2" id = "player2Name">Player 2</td>
+	        </tr>
+    	</thead>
       </table>
     </div>   
     <br>
@@ -168,24 +173,28 @@
     <br>
     <br>
     <div id="grid" class="grid-container">
-      <div id="cell1" class="grid-item" onclick="setCellColor(this.id);">1</div>
-      <div id="cell2" class="grid-item" onclick="setCellColor(this.id);">2</div>
-      <div id="cell3" class="grid-item" onclick="setCellColor(this.id);">3</div>  
-      <div id="cell4" class="grid-item" onclick="setCellColor(this.id);">4</div>
-      <div id="cell5" class="grid-item" onclick="setCellColor(this.id);">5</div>
-      <div id="cell6" class="grid-item" onclick="setCellColor(this.id);">6</div>  
-      <div id="cell7" class="grid-item" onclick="setCellColor(this.id);">7</div>
-      <div id="cell8" class="grid-item" onclick="setCellColor(this.id);">8</div>
-      <div id="cell9" class="grid-item" onclick="setCellColor(this.id);">9</div>
-      <div id="cell10" class="grid-item" onclick="setCellColor(this.id);">10</div>
-      <div id="cell11" class="grid-item" onclick="setCellColor(this.id);">11</div>
-      <div id="cell12" class="grid-item" onclick="setCellColor(this.id);">12</div>  
+      <div id="cell1" class="grid-item" onclick="makeMove(this.id);">1</div>
+      <div id="cell2" class="grid-item" onclick="makeMove(this.id);">2</div>
+      <div id="cell3" class="grid-item" onclick="makeMove(this.id);">3</div>  
+      <div id="cell4" class="grid-item" onclick="makeMove(this.id);">4</div>
+      <div id="cell5" class="grid-item" onclick="makeMove(this.id);">5</div>
+      <div id="cell6" class="grid-item" onclick="makeMove(this.id);">6</div>  
+      <div id="cell7" class="grid-item" onclick="makeMove(this.id);">7</div>
+      <div id="cell8" class="grid-item" onclick="makeMove(this.id);">8</div>
+      <div id="cell9" class="grid-item" onclick="makeMove(this.id);">9</div>
+      <div id="cell10" class="grid-item" onclick="makeMove(this.id);">10</div>
+      <div id="cell11" class="grid-item" onclick="makeMove(this.id);">11</div>
+      <div id="cell12" class="grid-item" onclick="makeMove(this.id);">12</div>  
     </div>
     <script src="my_game_logic.js"></script>
 
     <h3 id="congratulations" class="starting" style="display:none">Congratulations</h3>
     <h3 id="tie" class="starting" style="display:none">It's a tie!!</h3>
-    <iframe id="winning_image" class="corgiGif" src="https://giphy.com/embed/h4ke3VIEf1ib5WyHvQ" width="480" height="392" frameBorder="0" class="giphy-embed" style="display:none" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/dogs-confetti-corgiyolk-h4ke3VIEf1ib5WyHvQ"></a></p>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
     <input id="restartBtn" type="button" class="btn" value="Restart" onclick="restart()" style="display:none">
   </body>
 
