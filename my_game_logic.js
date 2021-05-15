@@ -1,5 +1,11 @@
+
+
 // the index of this array maps to the color of the cell with that index as the id
-underlying_color = ['red', 'green', 'blue', 'purple', 'orange', 'yellow','red', 'green', 'blue', 'purple', 'orange', 'yellow']; 
+underlying_color = [
+    'red', 'green', 'blue', 'purple', 
+    'orange', 'yellow','red', 'green', 
+    'blue', 'purple', 'orange', 'yellow'
+]; 
 
 //global variables listed below
 MATCHED_COLORS = [];
@@ -41,8 +47,14 @@ function startGame(){
   }
   document.getElementById ("grid").style.visibility = "visible";
   GAME_STARTED = true;
-  //referenced https://javascript.info/task/shuffle
-	underlying_color = underlying_color.sort(() => Math.random() - 0.5);
+
+  // shuffle the game board randomly
+  for (var i = 0; i < underlying_color.length - 1; i++){
+    swap_target = Math.ceil(i * Math.random());
+    placeholder = underlying_color[swap_target];
+    underlying_color[swap_target] = underlying_color[i];
+    underlying_color[i] = placeholder;
+  }
 }
 
 function randStartingPlayer(){
